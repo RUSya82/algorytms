@@ -1,63 +1,28 @@
+// Учитывая целочисленный массив arr и функцию фильтрации fn, верните отфильтрованный массив filteredArr.
+//
+//     Функция fn принимает один или два аргумента:
+//
+//     arr[i] - number from the arr
+// i - index of arr[i]
+// filteredArr должен содержать только элементы из arr, для которых вычисляется выражение fn(arr[i], i)
+// к истинному значению. Истинное значение — это значение, при котором Boolean(value) возвращает true.
+//
+//     Please solve it without the built-in Array.filter method.
+
 /**
+ * @param {number[]} arr
  * @param {Function} fn
- * @param {number} t milliseconds
- * @return {Function}
+ * @return {number[]}
  */
-const debounce = function(fn, t) {
-    let timeoutId;
-    return function(...args) {
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => fn(...args), t)
-    }
-};
-
-
-//  const log = debounce(console.log, 100);
-//  log('Hello'); // cancelled
-//  log('Hello'); // cancelled
-// log('Hello'); // Logged at t=100ms
-
-////////////////////////////////////////////////////////////////////////
-/**
- *
- * @param s {string}
- * @returns {number}
- */
-function bestStringItem(s) {
-    let maxRange = 0;
-    let zeroCount = 0;
-    let oneCount = 0;
-    let currentStudy = 0;
-    for(let i = 0; i < s.length; i++) {
-        switch (currentStudy) {
-            case 0:
-                if(s[i] === '0'){
-                    zeroCount++;
-                } else if (s[i] === '1') {
-                    currentStudy = 1;
-                    oneCount = 1;
-                }
-                break;
-            case 1:
-                if(s[i] === '1'){
-                    oneCount++;
-                    if(oneCount <= zeroCount){
-                        if(Math.min(zeroCount, oneCount) * 2 > maxRange){
-                            maxRange = Math.min(zeroCount, oneCount) * 2;
-                        }
-                    }
-                } else if(s[i] === '0') {
-                    oneCount = 0;
-                    zeroCount = 1;
-                    currentStudy = 0;
-                }
-                break;
-            default:
-                break;
+let filter = function(arr, fn) {
+    const res = [];
+    for (let i = 0; i < arr.length; i++) {
+        if(fn(arr[i], i)){
+            res.push(arr[i])
         }
     }
-    return maxRange
-}
-const s = '010011011000111111100000011111100011111110000111111'
-const d = '000000000000000000000000000011'
-console.log(bestStringItem(d))
+    return res
+};
+fn = function greaterThan10(n) { return n > 10; }
+const a = [0,10,20,30];
+console.log(filter(a,fn))
